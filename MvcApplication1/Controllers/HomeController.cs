@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcApplication1.Models;
+using Newtonsoft.Json;
 
 namespace MvcApplication1.Controllers
 {
@@ -28,9 +31,24 @@ namespace MvcApplication1.Controllers
             return View();
         }
 
-        public IActionResult DataAccess()
+        public async Task<IActionResult> WeatherForecastAsync()
         {
-            return View();
+            string apiUrl = "https://localhost:44316/weatherforecast";
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                       
+            var emp = new List<WeatherForecast>();
+            var responseMessage = await client.GetAsync(apiUrl);
+            
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+                emp = JsonConvert.DeserializeObject<List<WeatherForecast>>(responseData);
+            }
+            return View(emp);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
