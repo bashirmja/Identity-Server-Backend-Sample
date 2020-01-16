@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4Project", "IdentityServer4\IdentityServer4Project.csproj", "{1E17846B-B1DA-4994-BCEB-DBFB7BC7B4CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4Project", "IdentityServer4\IdentityServer4Project.csproj", "{1E17846B-B1DA-4994-BCEB-DBFB7BC7B4CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularWebApp", "AngularWebApp\AngularWebApp.csproj", "{199B931F-8CB8-4585-8741-EFB886C7ABB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1E17846B-B1DA-4994-BCEB-DBFB7BC7B4CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E17846B-B1DA-4994-BCEB-DBFB7BC7B4CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E17846B-B1DA-4994-BCEB-DBFB7BC7B4CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199B931F-8CB8-4585-8741-EFB886C7ABB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199B931F-8CB8-4585-8741-EFB886C7ABB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199B931F-8CB8-4585-8741-EFB886C7ABB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199B931F-8CB8-4585-8741-EFB886C7ABB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
