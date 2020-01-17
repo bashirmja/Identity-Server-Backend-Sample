@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MvcApplication1.Models;
@@ -30,7 +31,7 @@ namespace MvcApplication1.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public async Task<IActionResult> WeatherForecastAsync()
         {
             string apiUrl = "https://localhost:44316/weatherforecast";
