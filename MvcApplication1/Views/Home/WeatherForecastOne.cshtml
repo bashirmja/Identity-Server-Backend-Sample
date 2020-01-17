@@ -1,0 +1,38 @@
+﻿@model MvcApplication1.Models.WeatherForecast
+@{
+    ViewData["Title"] = "Weather Forecast";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TemperatureC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TemperatureF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Summary)
+        </th>
+    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.TemperatureC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.TemperatureF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Summary)
+            </td>
+        </tr>
+</table>

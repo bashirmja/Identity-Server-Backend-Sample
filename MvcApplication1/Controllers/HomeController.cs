@@ -51,6 +51,26 @@ namespace MvcApplication1.Controllers
             return View(emp);
         }
 
+        public async Task<IActionResult> WeatherForecastOneAsync()
+        {
+            string apiUrl = "https://localhost:44316/weatherforecast/1";
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(apiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var emp = new WeatherForecast();
+            var responseMessage = await client.GetAsync(apiUrl);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var responseData = responseMessage.Content.ReadAsStringAsync().Result;
+                emp = JsonConvert.DeserializeObject<WeatherForecast>(responseData);
+            }
+            return View(emp);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
