@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4Project", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendApiCore", "BackendApiCore\BackendApiCore.csproj", "{53BFBF50-A42D-45F4-87DD-0C8B7C0FA261}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JavaScriptclient", "JavaScriptclient\JavaScriptclient.csproj", "{F1AF2B2A-F696-4B00-AEE0-A4D437983348}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{53BFBF50-A42D-45F4-87DD-0C8B7C0FA261}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53BFBF50-A42D-45F4-87DD-0C8B7C0FA261}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53BFBF50-A42D-45F4-87DD-0C8B7C0FA261}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1AF2B2A-F696-4B00-AEE0-A4D437983348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1AF2B2A-F696-4B00-AEE0-A4D437983348}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1AF2B2A-F696-4B00-AEE0-A4D437983348}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1AF2B2A-F696-4B00-AEE0-A4D437983348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
