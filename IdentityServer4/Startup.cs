@@ -21,7 +21,7 @@ namespace IdentityServer4
                 .AddTestUsers(Config.Users.Get())
                 .AddDeveloperSigningCredential();
 
-            //services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,8 +33,8 @@ namespace IdentityServer4
             app.UseRouting();
             app.UseIdentityServer();
             
-            //app.UseStaticFiles();
-            //app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
 
         }
     }

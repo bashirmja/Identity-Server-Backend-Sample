@@ -20,45 +20,21 @@ namespace Config
                 },
                 new Client
                 {
-
-                    ClientId = "my-client",
-                    ClientName = "My Client",
-                    AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
-                    AllowAccessTokensViaBrowser = true,
-                    AllowRememberConsent = true,
-                    ClientSecrets = new List<Secret> { new Secret("superSecretPassword".Sha256()) },
-                    RequirePkce = true,
-                    RequireConsent = false,
-                    AlwaysIncludeUserClaimsInIdToken = true,
-                    AlwaysSendClientClaims = true,
-                    AllowedScopes =
-                      {
-                          IdentityServerConstants.StandardScopes.OpenId,
-                          IdentityServerConstants.StandardScopes.Profile,
-                          IdentityServerConstants.StandardScopes.Email,
-                          "customAPI.read"
-                      },
-                    RedirectUris = { "http://localhost:57484/login" },
-                    PostLogoutRedirectUris = { "http://localhost:57484/logout" },
-                    AllowedCorsOrigins = { "http://localhost:57484" },
-                },
-                new Client
-                {
                     ClientId = "js",
                     ClientName = "JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://localhost:44307/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:44307/index.html" },
-                    AllowedCorsOrigins =     { "http://localhost:44307" },
+                    RedirectUris =           { "https://localhost:44336/callback.html" },
+                    PostLogoutRedirectUris = { "https://localhost:44336/index.html" },
+                    AllowedCorsOrigins =     { "https://localhost:44336" },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        "customAPI.read"
                     }
                 }
             };
