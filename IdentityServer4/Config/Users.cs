@@ -16,16 +16,19 @@ namespace Config
                 Password = "123",
                 Claims = new List<Claim> {
                     new Claim(JwtClaimTypes.Email, "bashir.momen@amcsgroup.com"),
-                    new Claim(JwtClaimTypes.Role, "admin")
+                    new Claim(JwtClaimTypes.Role, "admin"),
+                    new Claim(JwtClaimTypes.NickName, "Bashir Momen")
+
                 }
             },
             new TestUser {
                 SubjectId = "67294cd7-819a-4c8e-b801-116ce3deb24c",
                 Username = "Jesper",
-                Password = "abc123",
+                Password = "123",
                 Claims = new List<Claim> {
                     new Claim(JwtClaimTypes.Email, "jesper@amcsgroup.com"),
-                    new Claim(JwtClaimTypes.Role, "admin")
+                    new Claim(JwtClaimTypes.Role, "admin"),
+                    new Claim(JwtClaimTypes.NickName, "Jesper Thygesen")
                 }
             }
         };

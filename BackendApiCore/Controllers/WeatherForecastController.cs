@@ -24,7 +24,6 @@ namespace BackendApiCore.Controllers
             _logger = logger;
         }
 
-        [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -37,7 +36,8 @@ namespace BackendApiCore.Controllers
             })
             .ToArray();
         }
-
+        
+        [Authorize]
         [HttpGet("{id}")]
         public WeatherForecast GetbyId(long id)
         {

@@ -14,7 +14,7 @@
 
     mgr.getUser().then(function (user) {
         if (user) {
-            $("#username").text(user.profile);
+            $("#username").text(user.profile.nickname);
             $("#loginmenu").css('visibility', 'hidden');
             $("#logoutmenu").css('visibility', 'visible');
             USERTOKEN = user.access_token;
@@ -34,7 +34,7 @@
 
 
 
-    $("#logout").click(function () {
+    $("#logoutmenu").click(function () {
         mgr.signoutRedirect();
     });
 
