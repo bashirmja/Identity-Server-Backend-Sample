@@ -17,7 +17,7 @@
             $("#username").text(user.profile.nickname);
             $("#loginmenu").css('visibility', 'hidden');
             $("#logoutmenu").css('visibility', 'visible');
-            USERTOKEN = user.access_token;
+            USERTOKEN = 'Bearer ' + user.access_token;
         }
         else {
             $("#username").text("");
@@ -60,7 +60,7 @@
             url: "https://localhost:44316/weatherforecast/1",
             beforeSend: function (xhr) {
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                xhr.setRequestHeader('Authorization', 'Bearer' + USERTOKEN);
+                xhr.setRequestHeader('Authorization', USERTOKEN);
             }
         }).done(function (data) {
 

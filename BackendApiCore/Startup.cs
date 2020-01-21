@@ -1,16 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace BackendApiCore
 {
@@ -27,13 +19,13 @@ namespace BackendApiCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                     .AddIdentityServerAuthentication(options =>
-                     {
-                         options.Authority = "https://localhost:44361/";
-                         options.ApiName = "customAPI";
-                         options.RequireHttpsMetadata = false;
-                     });
+            services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = "https://localhost:44361";
+                options.Audience = "customAPI";
+                options.RequireHttpsMetadata = false;
+            });
 
             services.AddCors(options =>
             {
