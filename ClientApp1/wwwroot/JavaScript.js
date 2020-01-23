@@ -1,78 +1,101 @@
 ﻿$(document).ready(function () {
+    myApp().initializePage();
+});
 
-    var USERTOKEN = null;
+var myApp = function () {
 
-    var config = {
-        authority: "https://localhost:44361",
-        client_id: "js",
-        redirect_uri: "https://localhost:44336/callback.html",
-        response_type: "code",
-        scope: "openid profile customAPI.read",
-        post_logout_redirect_uri: "https://localhost:44336/index.html",
+    var userManager = null;
+
+    function init() {
+        setupIodc();
+        setupLoginMenu();
+        setupDomEvents();
     };
-    var mgr = new Oidc.UserManager(config);
 
-    mgr.getUser().then(function (user) {
-        if (user) {
-            $("#username").text(user.profile.nickname);
-            $("#loginmenu").css('visibility', 'hidden');
-            $("#logoutmenu").css('visibility', 'visible');
-            USERTOKEN = 'Bearer ' + user.access_token;
+    function setupLoginMenu() {
+        userManager.getUser().then(function (user) {
+            if (user) {
+                $("#username").text(user.profile.nickname);
+                $("#loginmenu").css('visibility', 'hidden');
+                $("#logoutmenu").css('visibility', 'visible');
+            }
+            else {
+                $("#username").text("");
+                $("#loginmenu").css('visibility', 'visible');
+                $("#logoutmenu").css('visibility', 'hidden');
+            }
+        });
+
+    }
+
+    function setupIodc() {
+        userManager = new Oidc.UserManager({
+            authority: "https://localhost:44361",
+            client_id: "js",
+            redirect_uri: "https://localhost:44336/callback.html",
+            response_type: "code",
+            scope: "openid profile customAPI.read",
+            post_logout_redirect_uri: "https://localhost:44336/index.html",
+        });
+    }
+
+    function setupDomEvents() {
+        $("#loginmenu").click(function () {
+            userManager.signinRedirect();
+        });
+
+        $("#logoutmenu").click(function () {
+            userManager.signoutRedirect();
+        });
+
+        $("#search").click(function () {
+            apiRequestHandler("https://localhost:44316/weatherforecast", "#result")
+        });
+
+        $("#searchbyid").click(function () {
+            apiRequestHandler("https://localhost:44316/weatherforecast/1", "#result", true)
+        });
+    };
+
+    function apiRequestHandler(url, element, autorized) {
+        $(element).text("");
+        var returnData = null;
+
+        if (autorized) {
+
+            userManager.getUser().then(function (user) {
+                if (user) {
+                    returnData = ajaxCall(url, user.access_token)
+                        .then(function (data) {
+                            $(element).text(data)
+                        });
+
+                } else {
+                    $(element).text("Access Denaid!")
+                }
+            });
         }
         else {
-            $("#username").text("");
-            $("#loginmenu").css('visibility', 'visible');
-            $("#logoutmenu").css('visibility', 'hidden');
-            USERTOKEN = null;
-
+            returnData = ajaxCall(url)
+                .then(function (data) {
+                    $(element).text(data)
+                });
         }
-    });
 
-    $("#loginmenu").click(function () {
-        mgr.signinRedirect();
-    });
+    }
 
+    function ajaxCall(targetUrl, userToken) {
 
-
-    $("#logoutmenu").click(function () {
-        mgr.signoutRedirect();
-    });
-
-
-
-    $("#search").click(function () {
-        $("#result").text("");
-        $.ajax({
-            url: "https://localhost:44316/weatherforecast",
+        return $.ajax({
+            url: targetUrl,
             beforeSend: function (xhr) {
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
+                xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
             }
-        }).done(function (data) {
-
-            $("#result").text(data);
         });
-    });
+    }
 
-
-    $("#searchbyid").click(function () {
-        $("#result").text("");
-        $.ajax({
-            url: "https://localhost:44316/weatherforecast/1",
-            beforeSend: function (xhr) {
-                xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                xhr.setRequestHeader('Authorization', USERTOKEN);
-            }
-        }).done(function (data) {
-
-            $("#result").text(data);
-        });
-    });
-
-
-
-
-
-
-
-
-});
+    return {
+        initializePage: init,
+    };
+};
