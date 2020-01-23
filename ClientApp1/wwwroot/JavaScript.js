@@ -11,12 +11,12 @@ var myApp = function () {
     var userManager = null;
 
     function init() {
-        setupIodc();
+        setupOidc();
         setupLoginMenu();
         setupDomEvents();
     };
 
-    function setupIodc() {
+    function setupOidc() {
         userManager = new Oidc.UserManager({
             authority: "https://localhost:44361",
             client_id: "js",
@@ -63,7 +63,7 @@ var myApp = function () {
     function apiRequestHandler(url, element, autorized) {
         $(element).text("");
 
-        if (autorized) {
+        if (autorized!=null) {
             userManager.getUser().then(function (user) {
                 if (user) {
                     ajaxCall(url, user.access_token)
