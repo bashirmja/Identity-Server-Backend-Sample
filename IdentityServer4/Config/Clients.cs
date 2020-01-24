@@ -26,8 +26,8 @@ namespace Config
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "https://localhost:44336/callback.html" },
-                    PostLogoutRedirectUris = { "https://localhost:44336/index.html" },
+                    RedirectUris =           { "https://localhost:44336/callback-signin.html" },
+                    PostLogoutRedirectUris = { "https://localhost:44336/callback-signout.html" },
                     AllowedCorsOrigins =     { "https://localhost:44336" },
 
                     AllowedScopes =

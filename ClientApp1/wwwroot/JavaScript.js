@@ -20,29 +20,36 @@ var myApp = function () {
         userManager = new Oidc.UserManager({
             authority: "https://localhost:44361",
             client_id: "js",
-            redirect_uri: "https://localhost:44336/callback.html",
+            popup_redirect_uri : "https://localhost:44336/callback-signin.html",
             response_type: "code",
             scope: "openid profile customAPI.read",
-            post_logout_redirect_uri: "https://localhost:44336/index.html",
+            post_logout_redirect_uri: "https://localhost:44336/callback-signout.html",
+            automaticSilentRenew: true,
+            silent_redirect_uri: 'http://localhost:4200/silent-refresh.html',
+            popupWindowFeatures: 'location=no,menubar=no,resizable=no,toolbar=no,scrollbars=no,status=no,titlebar=no,width=500,height=550,left=100,top=100',
         });
 
         userManager.events.addUserLoaded(function () {
             console.log("* userLoaded Event");
+            setupLoginMenu();
         });
         userManager.events.addUserUnloaded(function () {
             console.log("* userUnloaded Event");
+            setupLoginMenu();
         });
         userManager.events.addAccessTokenExpiring(function () {
             console.log("* accessTokenExpiring Event");
         });
         userManager.events.addAccessTokenExpired(function () {
             console.log("* accessTokenExpired Event");
+            setupLoginMenu();
         });
         userManager.events.addSilentRenewError(function () {
             console.log("* silentRenewError Event");
         });
         userManager.events.addUserSignedOut(function () {
             console.log("* userSignedOut Event");
+            userManager.removeUser();
         });
 
         Oidc.Log.logger = console;
@@ -65,11 +72,11 @@ var myApp = function () {
 
     function setupDomEvents() {
         $("#loginmenu").click(function () {
-            userManager.signinRedirect();
+            userManager.signinPopup();
         });
 
         $("#logoutmenu").click(function () {
-            userManager.signoutRedirect();
+            userManager.signoutPopup();
         });
 
         $("#api").click(function () {
