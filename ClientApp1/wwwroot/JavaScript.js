@@ -25,6 +25,27 @@ var myApp = function () {
             scope: "openid profile customAPI.read",
             post_logout_redirect_uri: "https://localhost:44336/index.html",
         });
+
+        userManager.events.addUserLoaded(function () {
+            console.log("* userLoaded Event");
+        });
+        userManager.events.addUserUnloaded(function () {
+            console.log("* userUnloaded Event");
+        });
+        userManager.events.addAccessTokenExpiring(function () {
+            console.log("* accessTokenExpiring Event");
+        });
+        userManager.events.addAccessTokenExpired(function () {
+            console.log("* accessTokenExpired Event");
+        });
+        userManager.events.addSilentRenewError(function () {
+            console.log("* silentRenewError Event");
+        });
+        userManager.events.addUserSignedOut(function () {
+            console.log("* userSignedOut Event");
+        });
+
+        Oidc.Log.logger = console;
     }
 
     function setupLoginMenu() {
@@ -63,7 +84,7 @@ var myApp = function () {
     function apiRequestHandler(url, element, autorized) {
         $(element).text("");
 
-        if (autorized!=null) {
+        if (autorized != null) {
             userManager.getUser().then(function (user) {
                 if (user) {
                     ajaxCall(url, user.access_token)
