@@ -19,13 +19,13 @@ var myApp = function () {
     function setupOidc() {
         userManager = new Oidc.UserManager({
             authority: "https://localhost:44361",
-            client_id: "js1",
-            popup_redirect_uri : "https://localhost:44336/callback-signin.html",
+            client_id: "js2",
+            popup_redirect_uri : "https://localhost:44370/callback-signin.html",
             response_type: "code",
             scope: "openid profile customAPI.read",
-            post_logout_redirect_uri: "https://localhost:44336/callback-signout.html",
+            post_logout_redirect_uri: "https://localhost:44370/callback-signout.html",
             automaticSilentRenew: true,
-            silent_redirect_uri: 'http://localhost:44336/silent-refresh.html',
+            silent_redirect_uri: 'http://localhost:44370/silent-refresh.html',
             popupWindowFeatures: 'location=no,menubar=no,resizable=no,toolbar=no,scrollbars=no,status=no,titlebar=no,width=500,height=550,left=100,top=100',
         });
 
