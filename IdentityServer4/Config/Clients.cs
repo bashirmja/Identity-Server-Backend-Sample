@@ -25,7 +25,7 @@ namespace Config
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-
+                    RequireConsent=false,
                     RedirectUris =           { "https://localhost:44336/callback-signin.html" },
                     PostLogoutRedirectUris = { "https://localhost:44336/callback-signout.html" },
                     AllowedCorsOrigins =     { "https://localhost:44336" },
@@ -44,7 +44,7 @@ namespace Config
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-
+                    RequireConsent=false,
                     RedirectUris =           { "https://localhost:44370/callback-signin.html" },
                     PostLogoutRedirectUris = { "https://localhost:44370/callback-signout.html" },
                     AllowedCorsOrigins =     { "https://localhost:44370" },
