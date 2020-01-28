@@ -45,6 +45,7 @@ namespace Config
                     RequirePkce = true,
                     RequireClientSecret = false,
                     RequireConsent=false,
+                    AccessTokenLifetime=90,
                     RedirectUris =           { "https://localhost:44370/callback-signin.html" },
                     PostLogoutRedirectUris = { "https://localhost:44370/callback-signout.html" },
                     AllowedCorsOrigins =     { "https://localhost:44370" },

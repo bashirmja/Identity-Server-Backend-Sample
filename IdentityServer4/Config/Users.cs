@@ -11,7 +11,7 @@ namespace Config
         {
             return new List<TestUser> {
             new TestUser {
-                SubjectId = "5BE86359-073C-434B-AD2D-A3932222DABE",
+                SubjectId = "5BE86359",
                 Username = "bashir",
                 Password = "123",
                 Claims = new List<Claim> {
@@ -22,13 +22,13 @@ namespace Config
                 }
             },
             new TestUser {
-                SubjectId = "67294cd7-819a-4c8e-b801-116ce3deb24c",
-                Username = "Jesper",
+                SubjectId = "67294cd7",
+                Username = "test",
                 Password = "123",
                 Claims = new List<Claim> {
-                    new Claim(JwtClaimTypes.Email, "jesper@amcsgroup.com"),
-                    new Claim(JwtClaimTypes.Role, "admin"),
-                    new Claim(JwtClaimTypes.NickName, "Jesper Thygesen")
+                    new Claim(JwtClaimTypes.Email, "testuser@amcsgroup.com"),
+                    new Claim(JwtClaimTypes.Role, "user"),
+                    new Claim(JwtClaimTypes.NickName, "test user")
                 }
             }
         };

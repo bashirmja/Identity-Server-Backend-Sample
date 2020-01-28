@@ -7,7 +7,10 @@
 <body>
     <script src="oidc-client.min.js"></script>
     <script>
-        new Oidc.UserManager().signinSilentCallback();
+        new Oidc.UserManager().signinSilentCallback()
+            .catch((err) => {
+                console.log('bashir'+ err);
+        });
     </script>
 </body>
 </html>
