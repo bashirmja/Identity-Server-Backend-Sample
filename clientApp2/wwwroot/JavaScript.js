@@ -43,8 +43,8 @@ var myApp = function () {
         userManager.events.addAccessTokenExpired(function () {
             console.log("* accessTokenExpired Event");
         });
-        userManager.events.addSilentRenewError(function (err) {
-            console.log("* silentRenewError Event1" + err);
+        userManager.events.addSilentRenewError(function () {
+            console.log("* silentRenewError Event1" );
         });
         userManager.events.addUserSignedOut(function () {
             console.log("* userSignedOut Event");
@@ -74,10 +74,6 @@ var myApp = function () {
             userManager.signinPopup();
         });
 
-        $("#username").click(function () {
-            $("iframe").css({ "visibility": "visible", "display": "inline", "width": "1000px", "height": "1000px" })
-        });
-
         $("#logoutmenu").click(function () {
             userManager.signoutPopup();
         });
@@ -96,7 +92,6 @@ var myApp = function () {
         if (autorized != null) {
             userManager.getUser().then(function (user) {
                 if (user) {
-                    console.log("* Token:" + user.access_token);
                     ajaxCall(url, user.access_token)
                         .then(function (data) {
                             $(element).text(data)
