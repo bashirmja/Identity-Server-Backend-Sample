@@ -20,12 +20,12 @@ var myApp = function () {
         userManager = new Oidc.UserManager({
             authority: "https://localhost:44361",
             client_id: "js2",
-            popup_redirect_uri : "https://localhost:44370/callback-signin.html",
+            popup_redirect_uri: "https://localhost:44370/callback-signin.html",
             response_type: "code",
             scope: "openid profile customAPI.read",
             post_logout_redirect_uri: "https://localhost:44370/callback-signout.html",
             automaticSilentRenew: true,
-            silent_redirect_uri: 'http://localhost:44370/silent-refresh.html',
+            silent_redirect_uri: 'https://localhost:44370/callback-silent.html',
             popupWindowFeatures: 'location=no,menubar=no,resizable=no,toolbar=no,scrollbars=no,status=no,titlebar=no,width=500,height=550,left=100,top=100',
         });
 
@@ -42,10 +42,9 @@ var myApp = function () {
         });
         userManager.events.addAccessTokenExpired(function () {
             console.log("* accessTokenExpired Event");
-            setupLoginMenu();
         });
-        userManager.events.addSilentRenewError(function () {
-            console.log("* silentRenewError Event");
+        userManager.events.addSilentRenewError(function (err) {
+            console.log("* silentRenewError Event1" + err);
         });
         userManager.events.addUserSignedOut(function () {
             console.log("* userSignedOut Event");
@@ -75,6 +74,10 @@ var myApp = function () {
             userManager.signinPopup();
         });
 
+        $("#username").click(function () {
+            $("iframe").css({ "visibility": "visible", "display": "inline", "width": "1000px", "height": "1000px" })
+        });
+
         $("#logoutmenu").click(function () {
             userManager.signoutPopup();
         });
@@ -90,10 +93,10 @@ var myApp = function () {
 
     function apiRequestHandler(url, element, autorized) {
         $(element).text("");
-
         if (autorized != null) {
             userManager.getUser().then(function (user) {
                 if (user) {
+                    console.log("* Token:" + user.access_token);
                     ajaxCall(url, user.access_token)
                         .then(function (data) {
                             $(element).text(data)

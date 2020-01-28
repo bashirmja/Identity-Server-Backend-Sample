@@ -25,7 +25,7 @@ var myApp = function () {
             scope: "openid profile customAPI.read",
             post_logout_redirect_uri: "https://localhost:44336/callback-signout.html",
             automaticSilentRenew: true,
-            silent_redirect_uri: 'http://localhost:44336/silent-refresh.html',
+            silent_redirect_uri: 'https://localhost:44336/callback-silent.html',
             popupWindowFeatures: 'location=no,menubar=no,resizable=no,toolbar=no,scrollbars=no,status=no,titlebar=no,width=500,height=550,left=100,top=100',
         });
 

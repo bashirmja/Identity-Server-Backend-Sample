@@ -26,7 +26,7 @@ namespace Config
                     RequirePkce = true,
                     RequireClientSecret = false,
                     RequireConsent=false,
-                    RedirectUris =           { "https://localhost:44336/callback-signin.html" },
+                    RedirectUris =           { "https://localhost:44336/callback-signin.html","https://localhost:44336/callback-silent.html" },
                     PostLogoutRedirectUris = { "https://localhost:44336/callback-signout.html" },
                     AllowedCorsOrigins =     { "https://localhost:44336" },
 
@@ -46,7 +46,7 @@ namespace Config
                     RequireClientSecret = false,
                     RequireConsent=false,
                     AccessTokenLifetime=90,
-                    RedirectUris =           { "https://localhost:44370/callback-signin.html" },
+                    RedirectUris =           { "https://localhost:44370/callback-signin.html","https://localhost:44370/callback-silent.html" },
                     PostLogoutRedirectUris = { "https://localhost:44370/callback-signout.html" },
                     AllowedCorsOrigins =     { "https://localhost:44370" },
 
