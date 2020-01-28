@@ -16,45 +16,42 @@ namespace Config
                     ClientName = "Example Client Credentials Client Application",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     ClientSecrets = new List<Secret> { new Secret("superSecretPassword".Sha256()) },
-                    AllowedScopes = new List<string> { "customAPI.read" }
+                    AllowedScopes = new List<string> { "ApiScope" }
                 },
                 new Client
                 {
-                    ClientId = "js1",
-                    ClientName = "JavaScript Client 1",
+                    ClientId = "jsClient",
+                    ClientName = "JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
                     RequireClientSecret = false,
                     RequireConsent=false,
-                    RedirectUris =           { "https://localhost:44336/callback-signin.html","https://localhost:44336/callback-silent.html" },
-                    PostLogoutRedirectUris = { "https://localhost:44336/callback-signout.html" },
-                    AllowedCorsOrigins =     { "https://localhost:44336" },
+                    RedirectUris =
+                    {
+                        "https://localhost:44370/callback-signin.html",
+                        "https://localhost:44370/callback-silent.html",
+
+
+                        "https://localhost:44336/callback-signin.html",
+                        "https://localhost:44336/callback-silent.html"
+                    },
+                    PostLogoutRedirectUris =
+                    {
+                        "https://localhost:44370/callback-signout.html",
+
+                        "https://localhost:44336/callback-signout.html"
+                    },
+                    AllowedCorsOrigins =     {
+                        "https://localhost:44370",
+
+                        "https://localhost:44336"
+                    },
+
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "customAPI.read"
-                    }
-                },
-                new Client
-                {
-                    ClientId = "js2",
-                    ClientName = "JavaScript Client 2",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-                    RequireConsent=false,
-                    AccessTokenLifetime=90,
-                    RedirectUris =           { "https://localhost:44370/callback-signin.html","https://localhost:44370/callback-silent.html" },
-                    PostLogoutRedirectUris = { "https://localhost:44370/callback-signout.html" },
-                    AllowedCorsOrigins =     { "https://localhost:44370" },
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "customAPI.read"
+                        "ApiScope"
                     }
                 }
             };

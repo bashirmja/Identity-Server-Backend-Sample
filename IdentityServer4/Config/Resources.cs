@@ -31,7 +31,7 @@ namespace Config
                     Description = "Custom API Access",
                     UserClaims = new List<string> {"role"},
                     ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
-                    Scopes = new List<Scope> { new Scope("customAPI.read") }
+                    Scopes = new List<Scope> { new Scope("ApiScope") }
                 }
             };
         }
