@@ -12,22 +12,25 @@ var myApp = function () {
 
     function init() {
         setupOidc();
+        assignOidcEvents();
         setupLoginMenu();
-        setupDomEvents();
+        assignDomEvents();
     };
 
     function setupOidc() {
         userManager = new Oidc.UserManager({
             authority: "https://localhost:44361",
             client_id: "jsClient",
-            popup_redirect_uri : "https://localhost:44336/callback-signin.html",
+            popup_redirect_uri: "https://localhost:44336/callback-signin.html",
             response_type: "code",
             scope: "openid profile ApiScope",
             post_logout_redirect_uri: "https://localhost:44336/callback-signout.html",
             automaticSilentRenew: true,
             silent_redirect_uri: 'https://localhost:44336/callback-silent.html',
         });
+    }
 
+    function assignOidcEvents() {
         userManager.events.addUserLoaded(function () {
             console.log("* userLoaded Event");
             setupLoginMenu();
@@ -41,17 +44,14 @@ var myApp = function () {
         });
         userManager.events.addAccessTokenExpired(function () {
             console.log("* accessTokenExpired Event");
-            setupLoginMenu();
         });
         userManager.events.addSilentRenewError(function () {
-            console.log("* silentRenewError Event");
+            console.log("* silentRenewError Event1");
         });
         userManager.events.addUserSignedOut(function () {
             console.log("* userSignedOut Event");
             userManager.removeUser();
         });
-
-        Oidc.Log.logger = console;
     }
 
     function setupLoginMenu() {
@@ -69,7 +69,7 @@ var myApp = function () {
         });
     }
 
-    function setupDomEvents() {
+    function assignDomEvents() {
         $("#loginmenu").click(function () {
             userManager.signinPopup();
         });
@@ -83,31 +83,28 @@ var myApp = function () {
         });
 
         $("#apibyid").click(function () {
-            apiRequestHandler("https://localhost:44316/weatherforecast/1", "#result", true)
+            apiAutorizedRequestHandler("https://localhost:44316/weatherforecast/1", "#result")
         });
     };
 
-    function apiRequestHandler(url, element, autorized) {
-        $(element).text("");
-
-        if (autorized != null) {
-            userManager.getUser().then(function (user) {
-                if (user) {
-                    ajaxCall(url, user.access_token)
-                        .then(function (data) {
-                            $(element).text(data)
-                        });
-                } else {
-                    $(element).text("Access Denaid!")
-                }
-            });
-        }
-        else {
-            ajaxCall(url)
-                .then(function (data) {
-                    $(element).text(data)
+    function apiAutorizedRequestHandler(url, resultTag) {
+        $(resultTag).text("");
+        userManager.getUser().then(function (user) {
+            if (user) {
+                ajaxCall(url, user.access_token).then(function (data) {
+                    $(resultTag).text(data)
                 });
-        }
+            } else {
+                $(resultTag).text("Access Denaid!")
+            }
+        });
+    }
+
+    function apiRequestHandler(url, resultTag) {
+        $(resultTag).text("");
+        ajaxCall(url).then(function (data) {
+            $(resultTag).text(data)
+        });
     }
 
     function ajaxCall(targetUrl, userToken) {
@@ -115,8 +112,61 @@ var myApp = function () {
             url: targetUrl,
             beforeSend: function (xhr) {
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
+                if (userToken != null) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
+                }
             }
         });
     }
+};
+function setupDomEvents() {
+    $("#loginmenu").click(function () {
+        userManager.signinPopup();
+    });
+
+    $("#logoutmenu").click(function () {
+        userManager.signoutPopup();
+    });
+
+    $("#api").click(function () {
+        apiRequestHandler("https://localhost:44316/weatherforecast", "#result")
+    });
+
+    $("#apibyid").click(function () {
+        apiRequestHandler("https://localhost:44316/weatherforecast/1", "#result", true)
+    });
+};
+
+function apiRequestHandler(url, element, autorized) {
+    $(element).text("");
+
+    if (autorized != null) {
+        userManager.getUser().then(function (user) {
+            if (user) {
+                ajaxCall(url, user.access_token)
+                    .then(function (data) {
+                        $(element).text(data)
+                    });
+            } else {
+                $(element).text("Access Denaid!")
+            }
+        });
+    }
+    else {
+        ajaxCall(url)
+            .then(function (data) {
+                $(element).text(data)
+            });
+    }
+}
+
+function ajaxCall(targetUrl, userToken) {
+    return $.ajax({
+        url: targetUrl,
+        beforeSend: function (xhr) {
+            xhr.overrideMimeType("text/plain; charset=x-user-defined");
+            xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
+        }
+    });
+}
 };

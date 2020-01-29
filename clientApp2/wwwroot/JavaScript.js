@@ -12,8 +12,9 @@ var myApp = function () {
 
     function init() {
         setupOidc();
+        assignOidcEvents();
         setupLoginMenu();
-        setupDomEvents();
+        assignDomEvents();
     };
 
     function setupOidc() {
@@ -28,6 +29,10 @@ var myApp = function () {
             silent_redirect_uri: 'https://localhost:44370/callback-silent.html',
         });
 
+        Oidc.Log.logger = console;
+    }
+
+    function assignOidcEvents() {
         userManager.events.addUserLoaded(function () {
             console.log("* userLoaded Event");
             setupLoginMenu();
@@ -43,14 +48,12 @@ var myApp = function () {
             console.log("* accessTokenExpired Event");
         });
         userManager.events.addSilentRenewError(function () {
-            console.log("* silentRenewError Event1" );
+            console.log("* silentRenewError Event1");
         });
         userManager.events.addUserSignedOut(function () {
             console.log("* userSignedOut Event");
             userManager.removeUser();
         });
-
-        Oidc.Log.logger = console;
     }
 
     function setupLoginMenu() {
@@ -68,7 +71,7 @@ var myApp = function () {
         });
     }
 
-    function setupDomEvents() {
+    function assignDomEvents() {
         $("#loginmenu").click(function () {
             userManager.signinPopup();
         });
@@ -82,30 +85,28 @@ var myApp = function () {
         });
 
         $("#apibyid").click(function () {
-            apiRequestHandler("https://localhost:44316/weatherforecast/1", "#result", true)
+            apiAutorizedRequestHandler("https://localhost:44316/weatherforecast/1", "#result")
         });
     };
 
-    function apiRequestHandler(url, element, autorized) {
-        $(element).text("");
-        if (autorized != null) {
-            userManager.getUser().then(function (user) {
-                if (user) {
-                    ajaxCall(url, user.access_token)
-                        .then(function (data) {
-                            $(element).text(data)
-                        });
-                } else {
-                    $(element).text("Access Denaid!")
-                }
-            });
-        }
-        else {
-            ajaxCall(url)
-                .then(function (data) {
-                    $(element).text(data)
+    function apiAutorizedRequestHandler(url, resultTag) {
+        $(resultTag).text("");
+        userManager.getUser().then(function (user) {
+            if (user) {
+                ajaxCall(url, user.access_token).then(function (data) {
+                    $(resultTag).text(data)
                 });
-        }
+            } else {
+                $(resultTag).text("Access Denaid!")
+            }
+        });
+    }
+
+    function apiRequestHandler(url, resultTag) {
+        $(resultTag).text("");
+        ajaxCall(url).then(function (data) {
+            $(resultTag).text(data)
+        });
     }
 
     function ajaxCall(targetUrl, userToken) {
@@ -113,7 +114,9 @@ var myApp = function () {
             url: targetUrl,
             beforeSend: function (xhr) {
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
+                if (userToken != null) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
+                }
             }
         });
     }
