@@ -28,6 +28,8 @@ var myApp = function () {
             automaticSilentRenew: true,
             silent_redirect_uri: 'https://localhost:44336/callback-silent.html',
         });
+
+        Oidc.Log.logger = console;
     }
 
     function assignOidcEvents() {
@@ -118,55 +120,4 @@ var myApp = function () {
             }
         });
     }
-};
-function setupDomEvents() {
-    $("#loginmenu").click(function () {
-        userManager.signinPopup();
-    });
-
-    $("#logoutmenu").click(function () {
-        userManager.signoutPopup();
-    });
-
-    $("#api").click(function () {
-        apiRequestHandler("https://localhost:44316/weatherforecast", "#result")
-    });
-
-    $("#apibyid").click(function () {
-        apiRequestHandler("https://localhost:44316/weatherforecast/1", "#result", true)
-    });
-};
-
-function apiRequestHandler(url, element, autorized) {
-    $(element).text("");
-
-    if (autorized != null) {
-        userManager.getUser().then(function (user) {
-            if (user) {
-                ajaxCall(url, user.access_token)
-                    .then(function (data) {
-                        $(element).text(data)
-                    });
-            } else {
-                $(element).text("Access Denaid!")
-            }
-        });
-    }
-    else {
-        ajaxCall(url)
-            .then(function (data) {
-                $(element).text(data)
-            });
-    }
-}
-
-function ajaxCall(targetUrl, userToken) {
-    return $.ajax({
-        url: targetUrl,
-        beforeSend: function (xhr) {
-            xhr.overrideMimeType("text/plain; charset=x-user-defined");
-            xhr.setRequestHeader('Authorization', 'Bearer ' + userToken);
-        }
-    });
-}
 };
