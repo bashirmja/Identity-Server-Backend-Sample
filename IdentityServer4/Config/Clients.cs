@@ -27,22 +27,20 @@ namespace Config
                     RequireConsent=false,
                     RedirectUris =
                     {
-                        "https://localhost:44370/callback-signin.html",
-                        "https://localhost:44370/callback-silent.html",
-
+                        "http://localhost:4200/auth-callback",
+                        "http://localhost:4200/silent-refresh.html",
 
                         "https://localhost:44336/callback-signin.html",
                         "https://localhost:44336/callback-silent.html"
                     },
                     PostLogoutRedirectUris =
                     {
-                        "https://localhost:44370/callback-signout.html",
-
-                        "https://localhost:44336/callback-signout.html"
+                        "https://localhost:44336/callback-signout.html",
+                        
+                        "http://localhost:4200/"
                     },
                     AllowedCorsOrigins =     {
-                        "https://localhost:44370",
-
+                        "http://localhost:4200",
                         "https://localhost:44336"
                     },
 
